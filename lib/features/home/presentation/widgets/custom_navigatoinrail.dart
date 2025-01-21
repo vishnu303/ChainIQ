@@ -26,7 +26,6 @@ class CustomNavigationRail extends StatelessWidget {
         selectedIndex: selectedIndex,
         groupAlignment: -1,
         elevation: 10,
-        backgroundColor: Theme.of(context).colorScheme.surface,
         onDestinationSelected: (index) {
           context.read<NavigationCubit>().navigateTo(index);
         },
@@ -40,16 +39,6 @@ class CustomNavigationRail extends StatelessWidget {
               )
             : const SizedBox.shrink(),
         selectedLabelTextStyle: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-          fontWeight: FontWeight.bold,
-        ),
-        unselectedLabelTextStyle: TextStyle(
-          color: Theme.of(context).colorScheme.onSurface,
-        ),
-        selectedIconTheme: IconThemeData(
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        unselectedIconTheme: IconThemeData(
           color: Theme.of(context).colorScheme.onSurface,
         ),
         destinations: navigationDestinations.map((destination) {
