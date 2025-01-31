@@ -11,6 +11,9 @@ class MobileHomeScreen extends StatelessWidget {
     return BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state) {
         return Scaffold(
+          appBar: AppBar(
+            title: Text('CoinIQ'),
+          ),
           body: homePages[state.selectedIndex],
           bottomNavigationBar: NavigationBar(
             selectedIndex: state.selectedIndex,

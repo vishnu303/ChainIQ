@@ -1,4 +1,5 @@
 import 'package:chainiq/features/home/presentation/pages/demo_page.dart';
+import 'package:chainiq/features/market/presentation/pages/market_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -24,7 +25,7 @@ final List<NavigationDestination> navigationDestinations = const [
 
 // homescreen pages
 List homePages = [
-  DemoPage(title: 'Market'),
+  MarketScreen(),
   DemoPage(title: 'News'),
   DemoPage(title: 'Portfolio'),
   DemoPage(title: 'Settings'),
