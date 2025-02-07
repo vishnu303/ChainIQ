@@ -45,9 +45,14 @@ class CryptoListItem extends StatelessWidget {
                   radius: 15,
                   backgroundImage: NetworkImage(crypto.image, scale: 3),
                 ),
-                Text(
-                  crypto.symbol,
-                  style: const TextStyle(fontWeight: FontWeight.w500),
+                Expanded(
+                  child: Text(
+                    crypto.symbol.toUpperCase(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -61,7 +66,9 @@ class CryptoListItem extends StatelessWidget {
             child: Text(
               '${percentageFormat.format(crypto.priceChangePercentage24H)}%',
               style: TextStyle(
-                color: 2 >= 0 ? Colors.green : Colors.red,
+                color: crypto.priceChangePercentage24H >= 0
+                    ? Colors.green
+                    : Colors.red,
                 fontWeight: FontWeight.w500,
               ),
             ),
