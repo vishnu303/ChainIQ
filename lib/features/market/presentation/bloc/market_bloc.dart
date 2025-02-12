@@ -20,7 +20,7 @@ class MarketBloc extends Bloc<MarketEvent, MarketState> {
       var cryptoList = await _cryptoList();
       emit(CryptoListLoaded(cryptoList: cryptoList));
     } catch (e) {
-      emit(e.toString());
+      emit(CryptoListError(message: e.toString()));
     }
   }
 }

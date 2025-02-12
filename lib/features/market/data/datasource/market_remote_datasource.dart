@@ -1,6 +1,8 @@
 import 'package:chainiq/core/constants/api_data.dart';
 import 'package:chainiq/core/constants/constants.dart';
+import 'package:chainiq/core/exception/server_exception.dart';
 import 'package:chainiq/features/market/constants/constants.dart';
+import 'package:chainiq/features/market/data/models/crypto_failure_response_model.dart';
 import 'package:chainiq/features/market/data/models/crypto_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -23,9 +25,20 @@ class MarketRemoteDatasourceImp implements MarketRemoteDatasource {
       };
       var url = Uri.https(baseUrl, cryptoListUrl, param);
       var response = await http.get(url);
-      List<dynamic> jsonList = jsonDecode(response.body);
-      debugPrint(response.body);
-      return jsonList.map((json) => CryptoModel.fromMap(json)).toList();
+      final jsonResponse = jsonDecode(response.body);
+      debugPrint(response.statusCode.toString());
+      if (response.statusCode == 200) {
+        debugPrint(response.body);
+        return (jsonResponse as List)
+            .map((json) => CryptoModel.fromMap(json))
+            .toList();
+      }
+
+      var errorResponse = CryptoFailureResposne.fromMap(jsonResponse);
+      throw ServerException(
+        message: errorResponse.status.errorMessage,
+        statusCode: errorResponse.status.errorCode,
+      );
     } catch (e) {
       rethrow;
     }
