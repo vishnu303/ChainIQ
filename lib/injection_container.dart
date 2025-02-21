@@ -4,6 +4,7 @@ import 'package:chainiq/features/market/domain/repositories/market_repository.da
 import 'package:chainiq/features/market/domain/usecases/crypto_list.dart';
 import 'package:chainiq/features/market/presentation/bloc/market_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart';
 
 final serviceLocator = GetIt.instance;
 void initDependencies() {
@@ -12,7 +13,7 @@ void initDependencies() {
 
 void _initMarket() {
   serviceLocator.registerFactory<MarketRemoteDatasource>(
-      () => MarketRemoteDatasourceImp());
+      () => MarketRemoteDatasourceImp(httpClient: Client()));
   serviceLocator.registerFactory<MarketRepository>(() => MarketRepositoryImp(
         marketRemoteDatasource: serviceLocator(),
       ));
