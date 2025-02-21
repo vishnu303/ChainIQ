@@ -13,6 +13,8 @@ abstract interface class MarketRemoteDatasource {
 }
 
 class MarketRemoteDatasourceImp implements MarketRemoteDatasource {
+  final http.Client httpClient;
+  MarketRemoteDatasourceImp({required this.httpClient});
   @override
 
   /// Get list of crypto by market cap
@@ -24,7 +26,7 @@ class MarketRemoteDatasourceImp implements MarketRemoteDatasource {
         "x-cg-demo-api-key": apiKey,
       };
       var url = Uri.https(baseUrl, cryptoListUrl, param);
-      var response = await http.get(url);
+      var response = await httpClient.get(url);
       final jsonResponse = jsonDecode(response.body);
       debugPrint(response.statusCode.toString());
       if (response.statusCode == 200) {
