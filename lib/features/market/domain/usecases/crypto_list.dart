@@ -1,11 +1,11 @@
-import 'package:chainiq/features/market/data/datasource/market_remote_datasource.dart';
 import 'package:chainiq/features/market/domain/entities/crypto.dart';
+import 'package:chainiq/features/market/domain/repositories/market_repository.dart';
 
 class CryptoList {
-  final MarketRemoteDatasource marketRemoteDatasource;
-  CryptoList({required this.marketRemoteDatasource});
+  final MarketRepository marketRepository;
+  CryptoList({required this.marketRepository});
 
   Future<List<Crypto>> call() async {
-    return marketRemoteDatasource.cryptoList();
+    return await marketRepository.cryptoList();
   }
 }

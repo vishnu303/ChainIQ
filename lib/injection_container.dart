@@ -4,6 +4,7 @@ import 'package:chainiq/features/market/data/datasource/market_remote_datasource
 import 'package:chainiq/features/market/data/repository/market_repository_imp.dart';
 import 'package:chainiq/features/market/domain/repositories/market_repository.dart';
 import 'package:chainiq/features/market/domain/usecases/crypto_list.dart';
+import 'package:chainiq/features/market/domain/usecases/global_market_data.dart';
 import 'package:chainiq/features/market/presentation/bloc/market_bloc.dart';
 
 import 'package:get_it/get_it.dart';
@@ -29,11 +30,16 @@ void _initMarket() {
         marketRemoteDatasource: serviceLocator(),
       ));
 
-  serviceLocator.registerFactory(() => CryptoList(
-        marketRemoteDatasource: serviceLocator(),
+  serviceLocator.registerFactory<CryptoList>(() => CryptoList(
+        marketRepository: serviceLocator(),
       ));
 
-  serviceLocator.registerLazySingleton(() => MarketBloc(
+  serviceLocator.registerFactory<GetGlobalMarketData>(() => GetGlobalMarketData(
+        marketRepository: serviceLocator(),
+      ));
+
+  serviceLocator.registerLazySingleton<MarketBloc>(() => MarketBloc(
         cryptoList: serviceLocator(),
+        getGlobalMarketData: serviceLocator(),
       ));
 }

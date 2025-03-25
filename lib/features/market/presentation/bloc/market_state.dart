@@ -15,3 +15,15 @@ final class CryptoListLoaded extends MarketState {
   final List<Crypto> cryptoList;
   CryptoListLoaded({required this.cryptoList});
 }
+
+final class GlobalDataLoaded extends MarketState {
+  final GlobalMarketData globalMarketData;
+  GlobalDataLoaded({required this.globalMarketData});
+}
+
+final class GlobalDataLoading extends MarketState {}
+
+final class GlobalDataError extends MarketState {
+  final String message;
+  GlobalDataError({required this.message});
+}
