@@ -1,2 +1,0 @@
-D:/Project Files/chainiq/android/app/.cxx/Debug/1z47d3uq/x86/CMakeFiles/edit_cache.dir
-D:/Project Files/chainiq/android/app/.cxx/Debug/1z47d3uq/x86/CMakeFiles/rebuild_cache.dir
