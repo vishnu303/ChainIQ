@@ -18,8 +18,8 @@ class NewsRemoteDataSourceImp implements NewsRemoteDataSource {
   NewsRemoteDataSourceImp({required this.httpClient});
   @override
   Future<List<ArticleModel>> fetchLatestArticles({
-    List<String>? categoryList = const ['1INCH', 'AIRDROP'],
-    List<String>? sourceIds = const ['cryptoglobe', 'coingape'],
+    List<String>? categoryList,
+    List<String>? sourceIds,
   }) async {
     try {
       var queryParameters = {"limit": articleContentLimit, "lang": "EN"};

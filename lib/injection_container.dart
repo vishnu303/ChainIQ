@@ -16,52 +16,56 @@ import 'package:http/http.dart';
 
 final serviceLocator = GetIt.instance;
 void initDependencies() {
+  serviceLocator.registerLazySingleton<Client>(() => Client());
+
   _initMarket();
   _initHome();
   _initNews();
 }
 
 void _initHome() {
-  serviceLocator.registerLazySingleton(() => NavigationCubit());
+  serviceLocator.registerFactory(() => NavigationCubit());
 
-  serviceLocator.registerLazySingleton(() => ThemeCubit());
+  serviceLocator.registerFactory(() => ThemeCubit());
 }
 
 void _initMarket() {
-  serviceLocator.registerFactory<MarketRemoteDatasource>(
-      () => MarketRemoteDatasourceImp(httpClient: Client()));
+  serviceLocator.registerLazySingleton<MarketRemoteDatasource>(
+      () => MarketRemoteDatasourceImp(httpClient: serviceLocator<Client>()));
 
-  serviceLocator.registerFactory<MarketRepository>(() => MarketRepositoryImp(
-        marketRemoteDatasource: serviceLocator(),
+  serviceLocator
+      .registerLazySingleton<MarketRepository>(() => MarketRepositoryImp(
+            marketRemoteDatasource: serviceLocator<MarketRemoteDatasource>(),
+          ));
+
+  serviceLocator.registerLazySingleton<CryptoList>(() => CryptoList(
+        marketRepository: serviceLocator<MarketRepository>(),
       ));
 
-  serviceLocator.registerFactory<CryptoList>(() => CryptoList(
-        marketRepository: serviceLocator(),
-      ));
+  serviceLocator
+      .registerLazySingleton<GetGlobalMarketData>(() => GetGlobalMarketData(
+            marketRepository: serviceLocator<MarketRepository>(),
+          ));
 
-  serviceLocator.registerFactory<GetGlobalMarketData>(() => GetGlobalMarketData(
-        marketRepository: serviceLocator(),
-      ));
-
-  serviceLocator.registerLazySingleton<MarketBloc>(() => MarketBloc(
-        cryptoList: serviceLocator(),
-        getGlobalMarketData: serviceLocator(),
+  serviceLocator.registerFactory<MarketBloc>(() => MarketBloc(
+        cryptoList: serviceLocator<CryptoList>(),
+        getGlobalMarketData: serviceLocator<GetGlobalMarketData>(),
       ));
 }
 
 void _initNews() {
   serviceLocator.registerLazySingleton<NewsRemoteDataSource>(
     () => NewsRemoteDataSourceImp(
-      httpClient: Client(),
+      httpClient: serviceLocator<Client>(),
     ),
   );
 
   serviceLocator.registerLazySingleton<NewsRepository>(
     () => NewsRepositoryImp(
-      newsRemoteDataSource: serviceLocator(),
+      newsRemoteDataSource: serviceLocator<NewsRemoteDataSource>(),
     ),
   );
 
   serviceLocator.registerLazySingleton<FetchLatestNews>(
-      () => FetchLatestNews(newsRepository: serviceLocator()));
+      () => FetchLatestNews(newsRepository: serviceLocator<NewsRepository>()));
 }
