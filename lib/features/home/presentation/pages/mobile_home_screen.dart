@@ -12,7 +12,7 @@ class MobileHomeScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('CoinIQ'),
+            title: Text(navigationDestinations[state.selectedIndex].label),
             forceMaterialTransparency: true,
           ),
           body: homePages[state.selectedIndex],
